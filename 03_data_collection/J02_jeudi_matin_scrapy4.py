@@ -1,3 +1,6 @@
+# AUTHENTIFICATION
+
+
 # Import os => Library used to easily manipulate operating systems
 ## More info => https://docs.python.org/3/library/os.html
 # import os
@@ -26,7 +29,7 @@ class QuotesLogin(scrapy.Spider):
             response,
             formdata={"username": "john", "password": "secret"},
             # Function to be called once logged in
-            callback=self.after_login,
+            callback=self.after_login,  # TODO voir le after_login
         )
 
     # Callback used after login

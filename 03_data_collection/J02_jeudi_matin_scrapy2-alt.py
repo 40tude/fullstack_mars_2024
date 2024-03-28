@@ -25,11 +25,15 @@ class QuotesSpider(scrapy.Spider):
     # Callback function that will be called when starting your spider
     # It will get text, author and tags of all the <div> with class="quote"
     def parse(self, response):
-        quotes = response.xpath("/html/body/div/div[2]/div[1]/div")
-        for quote in quotes:
-            # ! YIELD !!!!!!!!!!!!!!!!!!
+        quotes = response.xpath(
+            "/html/body/div/div[2]/div[1]/div"
+        )  # voir qu'il n'y a pas de '/' à la fin
+        for quote in quotes:  # TODO prêter attention à la boucle
+            # ! yield
             yield {
-                "text": quote.xpath("span[1]/text()").get(),
+                "text": quote.xpath(
+                    "span[1]/text()"
+                ).get(),  # voir qu'il n'y a pas de '/' au début
                 "author": quote.xpath("span[2]/small/text()").get(),
                 "tags": quote.xpath("div/a/text()").getall(),
             }

@@ -1,3 +1,5 @@
+# MULTIPLE URLS
+
 # Import os => Library used to easily manipulate operating systems
 ## More info => https://docs.python.org/3/library/os.html
 # import os
@@ -17,7 +19,10 @@ class QuotesSpiderPage(scrapy.Spider):
     # Name of your spider
     name = "quotes"
 
-    # Url to start your spider from
+    # https://stackoverflow.com/questions/71238214/multiple-start-urls-in-python-scrapy-are-running-in-order-or-simultaneously
+    # Scrapy is asynchronous in nature.
+    # It scrapes the urls in parallel and the order in which requests are enqueued for download is determined by the scheduler
+    # https://docs.scrapy.org/en/master/topics/scheduler.html
     start_urls = [
         "http://quotes.toscrape.com/page/1/",
         "http://quotes.toscrape.com/page/2/",

@@ -12,13 +12,13 @@ class RandomQuoteSpider(scrapy.Spider):
 
     def parse(self, response):
         return {
-            "text": response.xpath(
+            "riri": response.xpath(
                 "/html/body/div/div[2]/div[1]/div/span[1]/text()"  # En dehors de text() on peut mettre quoi ?
             ).get(),
-            "author": response.xpath(
+            "fifi": response.xpath(
                 "/html/body/div/div[2]/div[1]/div/span[2]/small/text()"
             ).get(),
-            "tags": response.xpath(
+            "loulou": response.xpath(
                 "/html/body/div/div[2]/div[1]/div/div/a/text()"
             ).getall(),
             # difference entre get() et getall()
@@ -40,6 +40,8 @@ if Path.exists(current_dir / filename):
 # https://docs.scrapy.org/en/latest/topics/settings.html?highlight=settings#settings
 process = CrawlerProcess(
     settings={
+        # voir https://www.whatismybrowser.com/guides/the-latest-user-agent/chrome
+        # je sais pas encore si tout est utilisable dans scrapy
         "USER_AGENT": "Chrome/97.0",
         "LOG_LEVEL": logging.INFO,  # CRITICAL, ERROR, WARNING, INFO, DEBUG...
         # https://docs.scrapy.org/en/latest/topics/logging.html#topics-logging
@@ -50,6 +52,9 @@ process = CrawlerProcess(
                 "format": "json"
             },  # https://docs.scrapy.org/en/latest/topics/feed-exports.html#std-setting-FEEDS
         },
+        # log dans fichier
+        "LOG_STDOUT": False,
+        "LOG_FILE": f"{current_dir}/scrapy.log",
     }
 )
 

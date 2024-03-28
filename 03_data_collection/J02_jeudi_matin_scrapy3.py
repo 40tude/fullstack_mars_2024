@@ -1,3 +1,5 @@
+# MULTIPLE PAGES
+
 # Import os => Library used to easily manipulate operating systems
 ## More info => https://docs.python.org/3/library/os.html
 # import os
@@ -38,15 +40,27 @@ class QuotesMultipleSpider(scrapy.Spider):
             # Select the NEXT button and store it in next_page
             # Here we include the class of the li tag in the XPath
             # to avoid the difficujlty with the "previous" button
+
+            # xpath du bouton sur la page 1 = /html/body/div/div[2]/div[1]/nav/ul/li/a
+            # on veut pas récupérer le text() on veut le contenu du href
+            # sur la page 2 y a un bouton previous en plus du next
+            # du coup la première /a c'est celle du bouton previous
+            # Dans la page 2 on voit qu'il y a une classe pour le bouton Next
+            # previous  => /html/body/div/div[2]/div[1]/nav/ul/li[1]/a
+            # next      => /html/body/div/div[2]/div[1]/nav/ul/li[2]/a
+            # Voir la difference entre le bouton next de la page 1 (../li/a) et de la page 2 (../li[1]/a)
             next_page = response.xpath(
                 '/html/body/div/div[2]/div[1]/nav/ul/li[@class="next"]/a'
             ).attrib["href"]
         except KeyError:
-            # In the last page, there won't be any "href" and a KeyError will be raised
+            # ! In the last page, there won't be any "href" and a KeyError will be raised
+            # Ca part en vrille à la dernière page MAIS c'est normal
             logging.info("No next page. Terminating crawling process.")
         else:
             # If a next page is found, execute the parse method once again
-            yield response.follow(next_page, callback=self.parse)
+            yield response.follow(
+                next_page, callback=self.parse
+            )  # TODO Bien voir le callback=self.parse. Appel recurssif
 
 
 # Name of the file where the results will be saved
