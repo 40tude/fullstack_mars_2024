@@ -1,7 +1,8 @@
 # Import os => Library used to easily manipulate operating systems
 ## More info => https://docs.python.org/3/library/os.html
 import os
-from pathlib import Path
+
+# from pathlib import Path
 
 # Import logging => Library used for logs manipulation
 ## More info => https://docs.python.org/3/library/logging.html
@@ -40,7 +41,6 @@ class RandomQuoteSpider(scrapy.Spider):
 # Name of the file where the results will be saved
 filename = "1_randomquote.json"
 current_dir = os.path.dirname(__file__)  # os.path.abspath("")
-# current_dir = Path().absolute()
 
 # If file already exists, delete it before crawling (because Scrapy will
 # concatenate the last and new results otherwise)

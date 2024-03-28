@@ -70,7 +70,7 @@ if Path.exists(current_dir / filename):
 process = CrawlerProcess(
     settings={
         "USER_AGENT": "Chrome/97.0",
-        "LOG_LEVEL": logging.INFO,
+        "LOG_LEVEL": logging.INFO,  # CRITICAL, ERROR, WARNING, INFO, DEBUG...
         "FEEDS": {
             str(current_dir) + "/" + filename: {"format": "json"},
         },
