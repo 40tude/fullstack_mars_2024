@@ -1,7 +1,9 @@
 # Notes and project source code from my training "Data Science & Engineering - Fullstack" at JEDHA
 
+* Come after the Essential Training
+    * [Notes and projetcs source code](https://github.com/40tude/Data_Essentials_Stage_Oct_2023) 
 * 12 weeks
-* 18 mars - 18 juin 2024
+* march 18 - june 18 2024
 
 ## Main topics
 * Python Programming

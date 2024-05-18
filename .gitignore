@@ -16,4 +16,6 @@ cifar10.zip
 911.csv
 uber-raw-data-janjune-15.csv
 noisy_digits.csv
-# 00_uber.ipynb
+
+# see 07_deep_learning\11_Attention\training_checkpoints
+training_checkpoints/
