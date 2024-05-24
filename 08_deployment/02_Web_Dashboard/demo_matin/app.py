@@ -14,7 +14,7 @@ st.set_page_config(
 DATA_URL = ('https://full-stack-assets.s3.eu-west-3.amazonaws.com/Deployment/e-commerce_data.csv')
 
 ### App
-st.title("Marcel & Zoubida")
+st.title("Bob")
 
 st.markdown("""
     Welcome to this awesome `streamlit` dashboard. This library is great to build very fast and

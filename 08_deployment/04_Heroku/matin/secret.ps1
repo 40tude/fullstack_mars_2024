@@ -1,0 +1,1 @@
+$env:DATA_URL ="https://full-stack-assets.s3.eu-west-3.amazonaws.com/Deployment/e-commerce_data.csv"

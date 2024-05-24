@@ -1,9 +1,9 @@
-
 import streamlit as st
 import pandas as pd
 import plotly.express as px 
 import plotly.graph_objects as go
 import numpy as np
+import os
 
 ### Config
 st.set_page_config(
@@ -12,17 +12,18 @@ st.set_page_config(
     layout="wide"
 )
 
-DATA_URL = ('https://full-stack-assets.s3.eu-west-3.amazonaws.com/Deployment/e-commerce_data.csv')
+DATA_URL = (os.environ['DATA_URL'])
+# DATA_URL = ('https://full-stack-assets.s3.eu-west-3.amazonaws.com/Deployment/e-commerce_data.csv')
 
 ### App
-st.title("Bob - Build dashboards with Streamlit 🎨")
-
-
+st.title("Build dashboards with Streamlit 🎨")
 
 st.markdown("""
     Welcome to this awesome `streamlit` dashboard. This library is great to build very fast and
     intuitive charts and application running on the web. Here is a showcase of what you can do with
     it. Our data comes from an e-commerce website that simply displays samples of customer sales. Let's check it out.
+
+    You can download the whole code here 👉 [Source code](https://github.com/JedhaBootcamp/streamlit-demo-app)
 
     Also, if you want to have a real quick overview of what streamlit is all about, feel free to watch the below video 👇
 """)
@@ -37,6 +38,7 @@ st.markdown("---")
 # because it will cache your data so that your app 
 # won't have to reload it each time you refresh your app
 # @st.cache
+@st.cache_data
 def load_data(nrows):
     data = pd.read_csv(DATA_URL, nrows=nrows)
     data["Date"] = data["Date"].apply(lambda x: pd.to_datetime(",".join(x.split(",")[-2:])))
@@ -133,7 +135,7 @@ with col2:
             avg_period_country_sales = data[(data["country"]==country)]
             start_period, end_period = pd.to_datetime(start_period), pd.to_datetime(end_period)
             mask = (avg_period_country_sales["Date"] > start_period) & (avg_period_country_sales["Date"] < end_period)
-            avg_period_country_sales = avg_period_country_sales[mask].mean()
+            avg_period_country_sales = avg_period_country_sales[mask]["currency"].mean()
             st.metric("Average sales during selected period (in $)", np.round(avg_period_country_sales, 2))
 
 

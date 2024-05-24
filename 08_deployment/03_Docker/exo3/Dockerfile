@@ -1,34 +1,28 @@
-# A partir du répertoire exo3 où se trouve Dockerfile
-# docker build -t exo3_image .
-# docker run -it --rm -v "$(pwd)/app:/home/app"  -p 1024:5000 exo3_image
-# Brancher sont client Web sur : localhost:1024
-
-# Arborescence des fichiers
+# A partir du répertoire exo1 où se trouve Dockerfile
 # exo3
 #   Dockerfile
-#   requirements.txt
 #   app
 #     exo3.py
 
-# Le fichier requirements.txt contient les 4 lignes suivantes
-# streamlit
-# pandas
-# plotly
-# numpy
+
+
+# docker build -t exo3_image .
+# docker run -it --rm -v "$(pwd)/app:/home/app" -e PORT:80 -p 4000:80 exo3_image bash
+# Une fois sour bash
+#     streamlit run ./exo3.py --server.port 80
+# Client Web localhost:4000
 
 
 FROM python:3.12-slim
 
-RUN     --mount=type=bind,source=requirements.txt,target=/tmp/requirements.txt \
-pip install --requirement /tmp/requirements.txt
-
-# inform Docker that the container listens on the specified network ports at runtime
-# on peut le garder ou le virer - j'ai toujours pas compris 
-# On s'en fiche en fait c'est mata data : https://spacelift.io/blog/docker-expose-port
-# EXPOSE 5000
-
+RUN pip install streamlit
+RUN pip install pandas
+RUN pip install plotly
+RUN pip install numpy
+# EXPOSE 4000
 WORKDIR /home/app
 COPY    /app/exo3.py ./
 
-ENTRYPOINT ["streamlit", "run", "exo3.py", "--server.port=5000", "--server.address=0.0.0.0"]
+#CMD python exo3.py
+# ENTRYPOINT ["streamlit", "run", "exo3.py", "--server.port=4000", "--server.address=0.0.0.0"]
 

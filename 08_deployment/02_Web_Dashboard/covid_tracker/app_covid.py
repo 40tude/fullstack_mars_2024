@@ -1,5 +1,5 @@
 # docker run -it --rm -v "$(pwd):/home/app" -e PORT=80 -p 4000:80 jedha/streamlit-sample-app bash
-# streamlit run app.py --server.port 80
+# streamlit run app_covid.py --server.port 80
 
 import streamlit as st
 import pandas as pd

@@ -1,3 +1,7 @@
+# docker run -it --rm -v "$(pwd):/home/app" -e PORT=80 -p 4000:80 jedha/streamlit-sample-app bash
+# streamlit run app.py --server.port 80
+
+
 import streamlit as st
 import pandas as pd
 import plotly.express as px 
@@ -15,15 +19,16 @@ DATE_COLUMN = 'dateRep'
 DATA_URL = ('https://full-stack-assets.s3.eu-west-3.amazonaws.com/Deployment/ECDC_data.csv')
 
 ### App
-st.title('ZORRO - Covid Tracker')
+st.title('Zoubida - Covid Tracker')
 st.markdown("👋 Hello there! Welcome to this simple covid tracker app. We simply track the evolution of cases accross the world. Data comes from the European Centre for Disease Prevention and Control (ECDC)")
 st.markdown("Check out data here: [Data on the daily number of new reported COVID-19 cases and deaths by EU/EEA country](https://www.ecdc.europa.eu/en/publications-data/data-daily-new-cases-covid-19-eueea-country)")
 st.caption("At the moment of this app, data was lastly collected on December 25th 2021")
 
-@st.cache
+@st.cache_data
 def load_data(nrows):
     data = pd.read_csv(DATA_URL, nrows=nrows)
-    data[DATE_COLUMN] = pd.to_datetime(data[DATE_COLUMN])
+    data[DATE_COLUMN] = pd.to_datetime(data[DATE_COLUMN], dayfirst=True)
+    
     return data
 
 
@@ -91,7 +96,9 @@ country = st.selectbox("Which country would you like to see?", countries)
 ### Number of cases 
 cases_per_country = data[data["countriesAndTerritories"] == country].loc[:, ["dateRep", "cases"]]
 cases_per_country = cases_per_country.sort_values("dateRep", ascending=True).iloc[1:, :]
-cases_per_country["moving_average"] = cases_per_country.rolling(window=7, min_periods=1).mean()
+# cases_per_country.set_index("dateRep", inplace = True)
+# cases_per_country["moving_average"] = cases_per_country.rolling(window=7, min_periods=1).mean()
+cases_per_country["moving_average"] = cases_per_country.set_index("dateRep").rolling(window=7, min_periods=1).mean()
 
 #### Growth rate
 current_growth_rate = cases_per_country["moving_average"].iloc[-1] / cases_per_country["moving_average"].iloc[-2]
@@ -136,7 +143,7 @@ with col1:
 ### Number of deaths 
 deaths_per_country = data[data["countriesAndTerritories"] == country].loc[:, ["dateRep", "deaths"]]
 deaths_per_country = deaths_per_country.sort_values("dateRep", ascending=True).iloc[1:, :]
-deaths_per_country["moving_average"] = deaths_per_country.rolling(window=7, min_periods=1).mean()
+deaths_per_country["moving_average"] = deaths_per_country.set_index("dateRep").rolling(window=7, min_periods=1).mean()
 
 fig2 = go.Figure()
 fig2.add_trace(
