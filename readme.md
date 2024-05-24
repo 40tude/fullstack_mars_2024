@@ -54,7 +54,7 @@
     * Local Dev
     * Dashboard Streamlit
     * Docker
-    * Deploy to Heroku
+    * Deploy to Heroku 
     * MLFlow
     * Package & Serve models
     * API for your model
