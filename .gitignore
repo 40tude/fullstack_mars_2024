@@ -1,5 +1,6 @@
 *.log
 my_api_id.py
+secret.ps1
 
 __pycache__/
  *.pyc
@@ -19,3 +20,5 @@ noisy_digits.csv
 
 # see 07_deep_learning\11_Attention\training_checkpoints
 training_checkpoints/
+
+
